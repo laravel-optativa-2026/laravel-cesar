@@ -3,7 +3,15 @@ services:
         build:
             context: .
             dockerfile: docker/php/Dockerfile
-        working_dir: /var/www/html
+        working_dir: /var/www/html/laravel
+        command:
+            - sh
+            - -c
+            - |
+                chown -R www-data:www-data storage bootstrap/cache
+                chown www-data:www-data database
+                if [ -f database/database.sqlite ]; then chown www-data:www-data database/database.sqlite; fi
+                exec php-fpm
         volumes:
             - ./src:/var/www/html
             - ./docker/scripts:/scripts
