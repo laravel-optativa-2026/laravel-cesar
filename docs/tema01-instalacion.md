@@ -21,29 +21,19 @@ Instalación del proyecto con Docker y cración del proyecto Laravel
      - El comando o el código, en un bloque de código (nunca como captura).
      - Una captura solo si aporta algo visual (navegador, resultado, estructura...). -->
 
-### 2.1 [Nombre del paso]
+### 2.1 Creacion de vistas
 
-Explicación de lo que hago y para qué sirve.
+se van a crear 3 vistas llamadas: home, about y contact
 
-```bash
-php artisan make:model Producto -m
-```
-
-Fragmento de código relevante (indica el archivo):
+### 2.2 Definición de rutas
+Se modifica el fichero *routes/web.php* de la ssiguiente forma:
 
 ```php
-// proyecto/app/Models/Producto.php
-class Producto extends Model
-{
-    protected $fillable = ['nombre', 'precio'];
-}
+ Route::view('/', 'home')->name('home');
+ Route::view('/about', 'about')->name('about');
+ Route::view('/contact', 'contact')->name('contact');
+
 ```
-
-![Descripción de la captura](img/temaXX/01-descripcion.png)
-
-### 2.2 [Nombre del paso]
-
-...
 
 ---
 
@@ -51,9 +41,9 @@ class Producto extends Model
 
 | Comando | Para qué sirve |
 |---------|----------------|
-| `php artisan ...` | ... |
+| ` | ... |
 | `composer ...` | ... |
-| `git ...` | ... |
+| `docker-composer ...` | ... |
 
 ---
 
@@ -63,37 +53,57 @@ class Producto extends Model
      Copia el error como texto, no como captura.
      Si no has tenido ningún problema, documenta al menos algo que hayas tenido que investigar. -->
 
-### Problema 1: [Descripción corta]
+### Problema 1: Comprobacion del funcionamiento de laravel despues de su instalación 
 
-**Qué estaba haciendo:** ...
+**Qué estaba haciendo:** Comprovar el correcto funcionamiento de laravel una vez creado el proyecto básico
 
 **Error:**
 
 ```
-Pega aquí el mensaje de error completo
+Problema de servicios
 ```
 
-**Causa:** por qué ocurría (lo que has entendido, no solo lo que has hecho).
+**Causa:** Posible problema de servicios
 
 **Solución:**
 
+Ejecutamos en una terminar los siguientes commandos
+
 ```bash
-comando o cambio que lo resolvió
+
+docker exec -it proyecto-php-1 bash
+	php artisan key:generate
+	chmod -R 775 storage bootstrap/cache
+	chown -R www-data:www-data storage bootstrap/cache
+```
+Posteriormente será necesario añadir en fichero .em la siguiente configuración
+
+```bash
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=test
+DB_USERNAME=alumno
+DB_PASSWORD=alumno
+SESSION_DRIVER=file
+
 ```
 
-**Fuente:** [enlace a la documentación, foro, vídeo...](https://)
 
-### Problema 2: [Descripción corta]
+**Fuente:** chat GPT
 
-...
 
----
 
 ## 5. ✅ Resultado final
 
 <!-- Captura(s) de la aplicación funcionando al terminar el tema. -->
 
-![Resultado final del tema](img/temaXX/99-resultado-final.png)
+Vista "about.blade.php"
+![Descripción de la captura](img/temaXX/01-descripcion.png)
+
+Visya "home.balde.php"
+![Descripción de la captura](img/temaXX/01-descripcion.png)
+Visya "contact.balde.php"
+![Descripción de la captura](img/temaXX/01-descripcion.png)
 
 ---
 
